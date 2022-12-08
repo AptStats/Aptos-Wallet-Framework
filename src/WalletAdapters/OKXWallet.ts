@@ -120,7 +120,10 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   }: OKXWalletAdapterConfig = {}) {
     super();
 
-    this._provider = typeof window !== 'undefined' ? window.okxwallet.aptos : undefined;
+    this._provider =
+      typeof window !== 'undefined' && typeof window.okxwallet !== 'undefined'
+        ? window.okxwallet.aptos
+        : undefined;
     this._network = undefined;
     this._timeout = timeout;
     this._connecting = false;
