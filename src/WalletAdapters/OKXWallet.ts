@@ -328,7 +328,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
             publicKey: newAccount.publicKey
           };
         }
-        this.emit('accountChange', newAccount);
+        this.emit('accountChange', handleAccountChange);
       };
       await provider?.onAccountChange(handleAccountChange);
     } catch (error: any) {
