@@ -47,7 +47,7 @@ export interface IOKXWallet {
     accountWallet: MaybeHexString;
   }>;
   connect: () => Promise<ConnectOKXAccount>;
-  account(): Promise<MaybeHexString>;
+  account(): Promise<{ address: MaybeHexString; publicKey: MaybeHexString }>;
   publicKey(): Promise<MaybeHexString>;
   signAndSubmitTransaction(
     transaction: Types.TransactionPayload,
@@ -74,8 +74,12 @@ export interface IOKXWallet {
   generateTransaction(sender: MaybeHexString, payload: any, options?: any): Promise<any>;
   disconnect(): Promise<void>;
   network(): Promise<string>;
-  onAccountChange(listener: (address: string | undefined) => void): Promise<void>;
-  onNetworkChange(listener: (network: NetworkInfo) => void): Promise<void>;
+  onAccountChange(
+    listener: (
+      newAccount: { address: MaybeHexString; publicKey: MaybeHexString } | undefined
+    ) => void
+  ): Promise<void>;
+  onNetworkChange(listener: (network: string) => void): Promise<void>;
 }
 
 interface OKXWindow extends Window {
@@ -126,7 +130,10 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   }: OKXWalletAdapterConfig = {}) {
     super();
 
-    this._provider = typeof window !== 'undefined' && typeof window.okxwallet !== 'undefined' ? window.okxwallet.aptos : undefined;
+    this._provider =
+      typeof window !== 'undefined' && typeof window.okxwallet !== 'undefined'
+        ? window.okxwallet.aptos
+        : undefined;
     this._network = undefined;
     this._timeout = timeout;
     this._connecting = false;
@@ -199,11 +206,11 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
         };
 
         try {
-          const networkName = await provider?.network()
+          const networkName = await provider?.network();
           if (networkName) {
             this._network = networkName as WalletAdapterNetwork;
             this._chainId = AptosNetworks[networkName];
-            this._api = undefined;  //networkInfo.data.rpcProvider;
+            this._api = undefined; //networkInfo.data.rpcProvider;
           }
         } catch (error: any) {
           const errMsg = error.message;
@@ -300,23 +307,25 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
       const wallet = this._wallet;
       const provider = this._provider || window.okxwallet.aptos;
       if (!wallet || !provider) throw new WalletNotConnectedError();
-      const handleAccountChange = async (newAccount: any) => {
+      const handleAccountChange = async (
+        newAccount: { address: MaybeHexString; publicKey: MaybeHexString } | undefined
+      ) => {
         // disconnect wallet if newAccount is undefined
-        if (newAccount.data == 'no account') {
+        if (!newAccount) {
           if (this.connected) {
             await this.disconnect();
           }
           return;
         }
-        if (newAccount.data == '') {
+        if (!newAccount) {
           this._wallet = { publicKey: '', address: '', authKey: '', isConnected: false };
         }
         // const newPublicKey = await provider?.publicKey();
         if (this._wallet != null) {
           this._wallet = {
             ...this._wallet,
-            address: !newAccount || newAccount.data == 'no account' ? undefined : newAccount.data,
-            publicKey: undefined
+            address: newAccount.address,
+            publicKey: newAccount.publicKey
           };
         }
         this.emit('accountChange', newAccount);
@@ -329,15 +338,16 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
     }
   }
 
+  // OKX wallet doesn't support switching network yet.
   async onNetworkChange(): Promise<void> {
     try {
       const wallet = this._wallet;
       const provider = this._provider || window.okxwallet.aptos;
       if (!wallet || !provider) throw new WalletNotConnectedError();
-      const handleNetworkChange = (network: any) => {
-        this._network = network.data.networkName;
-        this._api = network.data.rpcProvider;
-        this._chainId = network.data.chainId;
+      const handleNetworkChange = (networkName: string) => {
+        this._network = networkName as WalletAdapterNetwork
+        this._api = undefined;
+        this._chainId = AptosNetworks[networkName];
         if (this._network) {
           this.emit('networkChange', this._network);
         }
