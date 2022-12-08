@@ -26,13 +26,13 @@ Supports:
 with `yarn`
 
 ```
-yarn add @aptstats/aptos-wallet-adapter
+yarn add aptstats/aptos-wallet-adapter
 ```
 
 with `npm`
 
 ```
-npm install @aptstats/aptos-wallet-adapter
+npm install aptstats/aptos-wallet-adapter
 ```
 
 # Examples
@@ -61,7 +61,7 @@ import {
   SafePalWalletAdapter,
   FoxWalletAdapter,
   SpacecyWalletAdapter
-} from '@aptstats/aptos-wallet-adapter';
+} from 'aptstats/aptos-wallet-adapter';
 
 const wallets = [
   new SpacecyWalletAdapter(),
@@ -100,7 +100,7 @@ export default App;
 # Web3 Hook
 
 ```typescript
-import { useWallet } from '@aptstats/aptos-wallet-adapter';
+import { useWallet } from 'aptstats/aptos-wallet-adapter';
 
 const { connected, account, network, ...rest } = useWallet();
 ```
@@ -108,7 +108,7 @@ const { connected, account, network, ...rest } = useWallet();
 # Connect & Disconnect
 
 ```typescript
-import { AptosWalletName, useWallet } from "@aptstats/aptos-wallet-adapter"
+import { AptosWalletName, useWallet } from "aptstats/aptos-wallet-adapter"
 
 ...
 
