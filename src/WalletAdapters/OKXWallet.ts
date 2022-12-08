@@ -34,6 +34,13 @@ interface OKXAccount {
   authKey?: MaybeHexString;
   isConnected: boolean;
 }
+
+const AptosNetworks = {
+  Mainnet: 1,
+  Testnet: 2,
+  Devnet: 39
+}
+
 export interface IOKXWallet {
   checkIsConnectedAndAccount: () => Promise<{
     isConnected: boolean;
@@ -66,8 +73,7 @@ export interface IOKXWallet {
   }>;
   generateTransaction(sender: MaybeHexString, payload: any, options?: any): Promise<any>;
   disconnect(): Promise<void>;
-  chainId(): Promise<void>;
-  network(): Promise<NetworkInfo>;
+  network(): Promise<string>;
   onAccountChange(listener: (address: string | undefined) => void): Promise<void>;
   onNetworkChange(listener: (network: NetworkInfo) => void): Promise<void>;
 }
@@ -120,10 +126,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   }: OKXWalletAdapterConfig = {}) {
     super();
 
-    this._provider =
-      typeof window !== 'undefined' && typeof window.okxwallet !== 'undefined'
-        ? window.okxwallet.aptos
-        : undefined;
+    this._provider = typeof window !== 'undefined' && typeof window.okxwallet !== 'undefined' ? window.okxwallet.aptos : undefined;
     this._network = undefined;
     this._timeout = timeout;
     this._connecting = false;
@@ -186,8 +189,8 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
       if (!response) {
         throw new WalletNotConnectedError('No connect response');
       }
-      const walletAccount = response.data.address;
-      const publicKey = response.data.publicKey;
+      const walletAccount = response.address;
+      const publicKey = response.publicKey;
       if (walletAccount) {
         this._wallet = {
           address: walletAccount,
@@ -196,11 +199,11 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
         };
 
         try {
-          const networkInfo: any = await provider?.chainId();
-          if (networkInfo) {
-            this._network = networkInfo.data.networkName;
-            this._chainId = networkInfo.data.chainId;
-            this._api = networkInfo.data.rpcProvider;
+          const networkName = await provider?.network()
+          if (networkName) {
+            this._network = networkName as WalletAdapterNetwork;
+            this._chainId = AptosNetworks[networkName];
+            this._api = undefined;  //networkInfo.data.rpcProvider;
           }
         } catch (error: any) {
           const errMsg = error.message;
@@ -312,7 +315,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
         if (this._wallet != null) {
           this._wallet = {
             ...this._wallet,
-            address: newAccount.data == 'no account' ? undefined : newAccount.data,
+            address: !newAccount || newAccount.data == 'no account' ? undefined : newAccount.data,
             publicKey: undefined
           };
         }
@@ -354,9 +357,9 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
     try {
       const provider = this._provider || window.okxwallet.aptos;
       if (!provider) throw new WalletNotConnectedError();
-      const account = await provider?.account();
+      const { address } = await provider?.account();
       const isConnected = await provider?.isConnected();
-      return { accountWallet: account, isConnected: isConnected };
+      return { accountWallet: address, isConnected: isConnected };
     } catch (error: any) {
       const errMsg = error.message;
       this.emit('error', new WalletNetworkChangeError(errMsg));
