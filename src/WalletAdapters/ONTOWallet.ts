@@ -22,7 +22,7 @@ import {
   WalletReadyState
 } from './BaseAdapter';
 
-interface IApotsErrorResult {
+interface IAptosErrorResult {
   code: number;
   name: string;
   message: string;
@@ -37,8 +37,8 @@ interface IONTOWallet {
   signAndSubmitTransaction(
     transaction: any,
     options?: any
-  ): Promise<{ hash: Types.HexEncodedBytes } | IApotsErrorResult>;
-  signTransaction(transaction: any, options?: any): Promise<Uint8Array | IApotsErrorResult>;
+  ): Promise<{ hash: Types.HexEncodedBytes } | IAptosErrorResult>;
+  signTransaction(transaction: any, options?: any): Promise<Uint8Array | IAptosErrorResult>;
   signMessage(message: SignMessagePayload): Promise<SignMessageResponse>;
   disconnect(): Promise<void>;
   network(): Promise<WalletAdapterNetwork>;
@@ -210,8 +210,8 @@ export class ONTOWalletAdapter extends BaseWalletAdapter {
       if (!wallet || !provider) throw new WalletNotConnectedError();
 
       const response = await provider.signTransaction(transaction, options);
-      if ((response as IApotsErrorResult).code) {
-        throw new Error((response as IApotsErrorResult).message);
+      if ((response as IAptosErrorResult).code) {
+        throw new Error((response as IAptosErrorResult).message);
       }
       return response as Uint8Array;
     } catch (error: any) {
@@ -231,8 +231,8 @@ export class ONTOWalletAdapter extends BaseWalletAdapter {
       if (!wallet || !provider) throw new WalletNotConnectedError();
 
       const response = await provider.signAndSubmitTransaction(transaction, options);
-      if ((response as IApotsErrorResult).code) {
-        throw new Error((response as IApotsErrorResult).message);
+      if ((response as IAptosErrorResult).code) {
+        throw new Error((response as IAptosErrorResult).message);
       }
       return response as { hash: Types.HexEncodedBytes };
     } catch (error: any) {
