@@ -13,7 +13,7 @@
     "test": "mocha --reporter spec dist/test/*.js",
     "test-lint": "eslint src --ext .js,.ts",
     "prepare": "npm run build",
-    "postinstall": "npm run build",
+    "install": "npm run build",
     "build": "tsc"
   },
   "peerDependencies": {
