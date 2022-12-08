@@ -73,7 +73,7 @@ export interface IOKXWallet {
 }
 
 interface OKXWindow extends Window {
-  okxwallet?: { apots: IOKXWallet };
+  okxwallet?: { aptos: IOKXWallet };
 }
 
 declare const window: OKXWindow;
@@ -120,7 +120,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   }: OKXWalletAdapterConfig = {}) {
     super();
 
-    this._provider = typeof window !== 'undefined' ? window.okxwallet.apots : undefined;
+    this._provider = typeof window !== 'undefined' ? window.okxwallet.aptos : undefined;
     this._network = undefined;
     this._timeout = timeout;
     this._connecting = false;
@@ -177,7 +177,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
       )
         throw new WalletNotReadyError();
       this._connecting = true;
-      const provider = this._provider || window.okxwallet.apots;
+      const provider = this._provider || window.okxwallet.aptos;
       const response: any = await provider?.connect();
 
       if (!response) {
@@ -217,7 +217,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
 
   async disconnect(): Promise<void> {
     const wallet = this._wallet;
-    const provider = this._provider || window.okxwallet.apots;
+    const provider = this._provider || window.okxwallet.aptos;
     if (wallet) {
       this._wallet = null;
       try {
@@ -235,7 +235,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   ): Promise<Uint8Array> {
     try {
       const wallet = this._wallet;
-      const provider = this._provider || window.okxwallet.apots;
+      const provider = this._provider || window.okxwallet.aptos;
       if (!wallet || !provider) throw new WalletNotConnectedError();
       const tx = await provider.generateTransaction(wallet.address || '', transactionPyld, options);
       if (!tx) throw new Error('Cannot generate transaction');
@@ -256,7 +256,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   ): Promise<{ hash: Types.HexEncodedBytes }> {
     try {
       const wallet = this._wallet;
-      const provider = this._provider || window.okxwallet.apots;
+      const provider = this._provider || window.okxwallet.aptos;
       if (!wallet || !provider) throw new WalletNotConnectedError();
       const response = await provider?.signAndSubmitTransaction(transactionPyld, options);
 
@@ -273,7 +273,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   async signMessage(messagePayload: SignMessagePayload): Promise<SignMessageResponse> {
     try {
       const wallet = this._wallet;
-      const provider = this._provider || window.okxwallet.apots;
+      const provider = this._provider || window.okxwallet.aptos;
       if (!wallet || !provider) throw new WalletNotConnectedError();
 
       const response = await provider?.signMessage(messagePayload);
@@ -292,7 +292,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   async onAccountChange(): Promise<void> {
     try {
       const wallet = this._wallet;
-      const provider = this._provider || window.okxwallet.apots;
+      const provider = this._provider || window.okxwallet.aptos;
       if (!wallet || !provider) throw new WalletNotConnectedError();
       const handleAccountChange = async (newAccount: any) => {
         // disconnect wallet if newAccount is undefined
@@ -326,7 +326,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   async onNetworkChange(): Promise<void> {
     try {
       const wallet = this._wallet;
-      const provider = this._provider || window.okxwallet.apots;
+      const provider = this._provider || window.okxwallet.aptos;
       if (!wallet || !provider) throw new WalletNotConnectedError();
       const handleNetworkChange = (network: any) => {
         this._network = network.data.networkName;
@@ -349,7 +349,7 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
     accountWallet: MaybeHexString;
   }> {
     try {
-      const provider = this._provider || window.okxwallet.apots;
+      const provider = this._provider || window.okxwallet.aptos;
       if (!provider) throw new WalletNotConnectedError();
       const account = await provider?.account();
       const isConnected = await provider?.isConnected();

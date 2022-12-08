@@ -3339,7 +3339,7 @@ cpy-cli@^4.2.0:
     cpy "^9.0.0"
     meow "^10.1.2"
 
-cpy@^9.0.0, cpy@^9.0.1:
+cpy@^9.0.0:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/cpy/-/cpy-9.0.1.tgz#7f3ad0ad5bafe0bc70645c4bb567969927cadb9f"
   integrity sha512-D9U0DR5FjTCN3oMTcFGktanHnAG5l020yvOCR1zKILmAyPP7I/9pl6NFgRbDcmSENtbK1sQLBz1p9HIOlroiNg==
