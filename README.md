@@ -8,33 +8,31 @@ This Repo takes almost the same code from the original one, but split all the ex
 
 ### Extension list
 
-- [ Petra ](https://github.com/AptStats/Petra-Wallet-Extension)
-- [Spacecy](https://github.com/AptStats/Spacecy-Wallet-Extension)
-- [OKX](https://github.com/AptStats/OKX-Wallet-Extension)
-- More will be added soon.
+- [AptosSnap-Wallet](https://github.com/AptStats/aptossnap-wallet-extension)
+- [Bitkeep-Wallet](https://github.com/AptStats/bitkeep-wallet-extension)
+- [Blocto-Wallet](https://github.com/AptStats/blocto-wallet-extension)
+- [Coin98-Wallet](https://github.com/AptStats/coin98-wallet-extension)
+- [Fewcha-Wallet](https://github.com/AptStats/fewcha-wallet-extension)
+- [Fletch-Wallet](https://github.com/AptStats/fletch-wallet-extension)
+- [Fox-Wallet](https://github.com/AptStats/fox-wallet-extension)
+- [Hippo-Wallet](https://github.com/AptStats/hippo-wallet-extension)
+- [HippoWeb-Wallet](https://github.com/AptStats/hippoweb-wallet-extension)
+- [HyperPay-Wallet](https://github.com/AptStats/hyperpay-wallet-extension)
+- [Martian-Wallet](https://github.com/AptStats/martian-wallet-extension)
+- [Nightly-Wallet](https://github.com/AptStats/nightly-wallet-extension)
+- [OKX-Wallet](https://github.com/AptStats/okx-wallet-extension)
+- [ONTO-Wallet](https://github.com/AptStats/onto-wallet-extension)
+- [PetraWalle](https://github.com/AptStats/petra-wallet-extension)
+- [Pontem-Wallet](https://github.com/AptStats/pontem-wallet-extension)
+- [Rise-Wallet](https://github.com/AptStats/rise-wallet-extension)
+- [SafePal-Wallet](https://github.com/AptStats/safepal-wallet-extension)
+- [Spacecy-Wallet](https://github.com/AptStats/spacecy-wallet-extension)
+- [Spika-Wallet](https://github.com/AptStats/spika-wallet-extension)
+- [TokenPocket-Wallet](https://github.com/AptStats/tokenpocket-wallet-extension)
 
-### Advertise time.
+### Advertisement.
 
 - You are welcome to submit your projects to [Aptos Network Stats](https://aptstats.xyz/)
-
-Supports:
-
-- [Aptos official wallet](https://github.com/aptos-labs/aptos-core/releases/tag/wallet-v0.1.1)
-- [Martian wallet](https://martianwallet.xyz/)
-- [Fewcha wallet](https://fewcha.app/)
-- [Hippo wallet](https://github.com/hippospace/hippo-wallet)
-- [Hippo web wallet](https://hippo-wallet-test.web.app/)
-- [Pontem Wallet](https://pontem.network/pontem-wallet)
-- [Spika wallet](https://spika.app)
-- [Rise Wallet](https://risewallet.io/)
-- [Fletch wallet](http://fletchwallet.io/)
-- [TokenPocket Wallet](https://tokenpocket.pro)
-- [ONTO Wallet](https://onto.app)
-- [Blocto wallet](https://portto.com/download)
-- [Nightly Wallet](https://nightly.app/download)
-- [FoxWallet](https://foxwallet.com)
-- [SpacecyWallet](https://spacecywallet.com)
-- [OKXWallet](https://www.okx.com/web3)
 
 # Installation
 
@@ -52,11 +50,9 @@ npm install @aptstats/aptos-wallet-framework
 
 # Examples
 
-## **Frontend Integration**
-
 ### **Wallet integration**
 
-# Use React Provider
+#### Use React Provider
 
 ```typescript
 import React from 'react';
@@ -84,7 +80,7 @@ const App: React.FC = () => {
 export default App;
 ```
 
-# Web3 Hook
+### Web3 Hook
 
 ```typescript
 import { useWallet } from 'aptstats/aptos-wallet-adapter';
@@ -92,7 +88,7 @@ import { useWallet } from 'aptstats/aptos-wallet-adapter';
 const { connected, account, network, ...rest } = useWallet();
 ```
 
-# Connect & Disconnect
+#### Connect & Disconnect
 
 ```typescript
 import { AptosWalletName, useWallet } from "@aptstats/aptos-wallet-adapter"
