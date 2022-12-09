@@ -1,6 +1,17 @@
-# aptos-wallet-adapter
+# aptos-wallet-framework
 
 React `WalletProvider` supporting loads of aptos wallets.
+
+This repo is initially forked from [Hippo space](https://github.com/hippospace/aptos-wallet-adapter), the reason for doing this is that original implementation supports a lot of wallets and put all the dependencies into one and I couldn't stand it.
+
+This Repo takes almost the same code from the original one, but split all the extensions into different packages, by doing this, developers can choose to install packages freely without having to worry about extra wasted node modules.
+
+### Extension list
+
+- [ Petra ](https://github.com/AptStats/Petra-Wallet-Extension)
+- [Spacecy](https://github.com/AptStats/Spacecy-Wallet-Extension)
+- [OKX](https://github.com/AptStats/OKX-Wallet-Extension)
+- More will be added soon.
 
 Supports:
 
@@ -26,13 +37,13 @@ Supports:
 with `yarn`
 
 ```
-yarn add aptstats/aptos-wallet-adapter
+yarn add @aptstats/aptos-wallet-framework
 ```
 
 with `npm`
 
 ```
-npm install aptstats/aptos-wallet-adapter
+npm install @aptstats/aptos-wallet-framework
 ```
 
 # Examples
@@ -45,40 +56,12 @@ npm install aptstats/aptos-wallet-adapter
 
 ```typescript
 import React from 'react';
-import {
-  WalletProvider,
-  HippoWalletAdapter,
-  AptosWalletAdapter,
-  HippoExtensionWalletAdapter,
-  MartianWalletAdapter,
-  FewchaWalletAdapter,
-  PontemWalletAdapter,
-  SpikaWalletAdapter,
-  RiseWalletAdapter,
-  FletchWalletAdapter,
-  TokenPocketWalletAdapter,
-  ONTOWalletAdapter,
-  SafePalWalletAdapter,
-  FoxWalletAdapter,
-  SpacecyWalletAdapter
-} from 'aptstats/aptos-wallet-adapter';
+import { WalletProvider } from '@aptstats/aptos-wallet-framework';
+import { PetraWalletAdapter } from '@aptstats/petra-wallet-extension';
+import { SpacecyWalletAdapter } from '@aptstats/spacecy-wallet-extension';
+import { OKXWalletAdapter } from '@aptstats/okx-wallet-extension';
 
-const wallets = [
-  new SpacecyWalletAdapter(),
-  new HippoWalletAdapter(),
-  new MartianWalletAdapter(),
-  new AptosWalletAdapter(),
-  new FewchaWalletAdapter(),
-  new HippoExtensionWalletAdapter(),
-  new PontemWalletAdapter(),
-  new SpikaWalletAdapter(),
-  new RiseWalletAdapter(),
-  new FletchWalletAdapter(),
-  new TokenPocketWalletAdapter(),
-  new ONTOWalletAdapter(),
-  new SafePalWalletAdapter(),
-  new FoxWalletAdapter()
-];
+const wallets = [new PetraWalletAdapter(), new SpacecyWalletAdapter(), new OKXWalletAdapter()];
 
 const App: React.FC = () => {
   return (
@@ -108,7 +91,7 @@ const { connected, account, network, ...rest } = useWallet();
 # Connect & Disconnect
 
 ```typescript
-import { AptosWalletName, useWallet } from "aptstats/aptos-wallet-adapter"
+import { AptosWalletName, useWallet } from "@aptstats/aptos-wallet-adapter"
 
 ...
 

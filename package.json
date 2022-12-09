@@ -11,6 +11,20 @@
     "prepublishOnly": "npm run build",
     "build": "rm -rf dist; tsc"
   },
+  "repository": {
+    "url": "https://github.com/AptStats/Aptos-Wallet-Framework"
+  },
+  "keywords": [
+    "Aptos",
+    "Aptos wallet",
+    "Aptos Wallet Adapter",
+    "Aptos wallet extension"
+  ],
+  "author": {
+    "name": "Eric Allen",
+    "email": "eric@aptstats.xyz",
+    "url": "https://aptstats.xyz"
+  },
   "peerDependencies": {
     "aptos": "^1.3.16",
     "react": "^18.X.X || 17.X.X",
