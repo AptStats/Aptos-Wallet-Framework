@@ -85,7 +85,7 @@ export interface WalletAdapterProps<Name extends string = string> {
   signMessage(
     message: string | SignMessagePayload | Uint8Array
   ): Promise<string | SignMessageResponse>;
-  checkIsConnectedAndAccount(): Promise<{ isConnected: boolean, accountWallet: MaybeHexString }>;
+  checkIsConnectedAndAccount(): Promise<{ isConnected: boolean; accountWallet: MaybeHexString }>;
 }
 
 export type WalletAdapter<Name extends string = string> = WalletAdapterProps<Name> &
@@ -112,10 +112,12 @@ export interface SignMessageResponse {
 
 export abstract class BaseWalletAdapter
   extends EventEmitter<WalletAdapterEvents>
+  // eslint-disable-next-line prettier/prettier
   implements WalletAdapter {
-  checkIsConnectedAndAccount(): Promise<{ isConnected: boolean; accountWallet: MaybeHexString; }> {
+  checkIsConnectedAndAccount(): Promise<{ isConnected: boolean; accountWallet: MaybeHexString }> {
     throw new Error('Method not implemented.');
   }
+
   abstract name: WalletName;
 
   abstract url: string;
