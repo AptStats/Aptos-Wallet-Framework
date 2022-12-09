@@ -39,7 +39,7 @@ const AptosNetworks = {
   Mainnet: 1,
   Testnet: 2,
   Devnet: 39
-}
+};
 
 export interface IOKXWallet {
   checkIsConnectedAndAccount: () => Promise<{
@@ -190,7 +190,9 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
       )
         throw new WalletNotReadyError();
       this._connecting = true;
-      const provider = this._provider || window.okxwallet.aptos;
+      const provider =
+        this._provider ||
+        (typeof window.okxwallet !== 'undefined' ? window.okxwallet.aptos : undefined);
       const response: any = await provider?.connect();
 
       if (!response) {
@@ -230,7 +232,9 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
 
   async disconnect(): Promise<void> {
     const wallet = this._wallet;
-    const provider = this._provider || window.okxwallet.aptos;
+    const provider =
+      this._provider ||
+      (typeof window.okxwallet !== 'undefined' ? window.okxwallet.aptos : undefined);
     if (wallet) {
       this._wallet = null;
       try {
@@ -248,7 +252,9 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   ): Promise<Uint8Array> {
     try {
       const wallet = this._wallet;
-      const provider = this._provider || window.okxwallet.aptos;
+      const provider =
+        this._provider ||
+        (typeof window.okxwallet !== 'undefined' ? window.okxwallet.aptos : undefined);
       if (!wallet || !provider) throw new WalletNotConnectedError();
       const tx = await provider.generateTransaction(wallet.address || '', transactionPyld, options);
       if (!tx) throw new Error('Cannot generate transaction');
@@ -269,7 +275,9 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   ): Promise<{ hash: Types.HexEncodedBytes }> {
     try {
       const wallet = this._wallet;
-      const provider = this._provider || window.okxwallet.aptos;
+      const provider =
+        this._provider ||
+        (typeof window.okxwallet !== 'undefined' ? window.okxwallet.aptos : undefined);
       if (!wallet || !provider) throw new WalletNotConnectedError();
       const response = await provider?.signAndSubmitTransaction(transactionPyld, options);
 
@@ -286,7 +294,9 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   async signMessage(messagePayload: SignMessagePayload): Promise<SignMessageResponse> {
     try {
       const wallet = this._wallet;
-      const provider = this._provider || window.okxwallet.aptos;
+      const provider =
+        this._provider ||
+        (typeof window.okxwallet !== 'undefined' ? window.okxwallet.aptos : undefined);
       if (!wallet || !provider) throw new WalletNotConnectedError();
 
       const response = await provider?.signMessage(messagePayload);
@@ -305,7 +315,9 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   async onAccountChange(): Promise<void> {
     try {
       const wallet = this._wallet;
-      const provider = this._provider || window.okxwallet.aptos;
+      const provider =
+        this._provider ||
+        (typeof window.okxwallet !== 'undefined' ? window.okxwallet.aptos : undefined);
       if (!wallet || !provider) throw new WalletNotConnectedError();
       const handleAccountChange = async (
         newAccount: { address: MaybeHexString; publicKey: MaybeHexString } | undefined
@@ -342,10 +354,12 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
   async onNetworkChange(): Promise<void> {
     try {
       const wallet = this._wallet;
-      const provider = this._provider || window.okxwallet.aptos;
+      const provider =
+        this._provider ||
+        (typeof window.okxwallet !== 'undefined' ? window.okxwallet.aptos : undefined);
       if (!wallet || !provider) throw new WalletNotConnectedError();
       const handleNetworkChange = (networkName: string) => {
-        this._network = networkName as WalletAdapterNetwork
+        this._network = networkName as WalletAdapterNetwork;
         this._api = undefined;
         this._chainId = AptosNetworks[networkName];
         if (this._network) {
@@ -365,7 +379,9 @@ export class OKXWalletAdapter extends BaseWalletAdapter {
     accountWallet: MaybeHexString;
   }> {
     try {
-      const provider = this._provider || window.okxwallet.aptos;
+      const provider =
+        this._provider ||
+        (typeof window.okxwallet !== 'undefined' ? window.okxwallet.aptos : undefined);
       if (!provider) throw new WalletNotConnectedError();
       const { address } = await provider?.account();
       const isConnected = await provider?.isConnected();
