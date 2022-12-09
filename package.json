@@ -1,6 +1,6 @@
 {
   "name": "@aptstats/aptos-wallet-framework",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -16,9 +16,10 @@
   },
   "keywords": [
     "Aptos",
+    "AptStats",
     "Aptos wallet",
-    "Aptos Wallet Adapter",
-    "Aptos wallet extension"
+    "Aptos Wallet Adapters",
+    "Aptos wallet extensions"
   ],
   "author": {
     "name": "Eric Allen",

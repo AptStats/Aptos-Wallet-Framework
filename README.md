@@ -13,6 +13,10 @@ This Repo takes almost the same code from the original one, but split all the ex
 - [OKX](https://github.com/AptStats/OKX-Wallet-Extension)
 - More will be added soon.
 
+### Advertise time.
+
+- You are welcome to submit your projects to [Aptos Network Stats](https://aptstats.xyz/)
+
 Supports:
 
 - [Aptos official wallet](https://github.com/aptos-labs/aptos-core/releases/tag/wallet-v0.1.1)
