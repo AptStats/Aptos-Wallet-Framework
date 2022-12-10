@@ -22,7 +22,7 @@ This Repo takes almost the same code from the original one, but split all the ex
 - [Nightly-Wallet](https://github.com/AptStats/nightly-wallet-extension)
 - [OKX-Wallet](https://github.com/AptStats/okx-wallet-extension)
 - [ONTO-Wallet](https://github.com/AptStats/onto-wallet-extension)
-- [PetraWalle](https://github.com/AptStats/petra-wallet-extension)
+- [Petra-Wallet](https://github.com/AptStats/petra-wallet-extension)
 - [Pontem-Wallet](https://github.com/AptStats/pontem-wallet-extension)
 - [Rise-Wallet](https://github.com/AptStats/rise-wallet-extension)
 - [SafePal-Wallet](https://github.com/AptStats/safepal-wallet-extension)
